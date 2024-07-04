@@ -10,7 +10,7 @@ spec:
     - name: counter
       type: component
       properties:
-        image: artifactory.aexp.com/ghcr-io-proxy/ghcr.io/wasmcloud/components/http-keyvalue-counter-rust:0.1.0
+        image: ghcr.io/wasmcloud/components/http-keyvalue-counter-rust:0.1.0
       traits:
         - type: spreadscaler
           properties:
@@ -46,7 +46,7 @@ spec:
     - name: httpserver
       type: capability
       properties:
-        image: artifactory.aexp.com/ghcr-io-proxy/ghcr.io/wasmcloud/http-server:0.20.0
+        image: ghcr.io/wasmcloud/http-server:0.20.0
       traits:
         # Link the httpserver to the component, and configure the HTTP server
         # to listen on port 8080 for incoming requests

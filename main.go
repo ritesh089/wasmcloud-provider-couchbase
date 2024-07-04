@@ -46,31 +46,6 @@ func run() error {
 	// Store the provider for use in the handlers
 	providerHandler.WasmcloudProvider = p
 
-	// // couchbase setup start
-	// bucketName := p.HostData().Config["bucketName"]
-	// connectionString := p.HostData().Config["connectionString"]
-	// username := p.HostData().Config["username"]
-	// password := p.HostData().Config["password"]
-
-	// cluster, err := gocb.Connect("couchbase://"+connectionString, gocb.ClusterOptions{
-	// 	Authenticator: gocb.PasswordAuthenticator{
-	// 		Username: username,
-	// 		Password: password,
-	// 	},
-	// })
-	// if err != nil {
-	// 	return err
-	// }
-
-	// bucket := cluster.Bucket(bucketName)
-	// if err = bucket.WaitUntilReady(5*time.Second, nil); err != nil {
-	// 	return err
-	// }
-
-	// col := bucket.DefaultCollection()
-	// providerHandler.collection = col
-	// couchbase setup end
-
 	// Setup two channels to await RPC and control interface operations
 	providerCh := make(chan error, 1)
 	signalCh := make(chan os.Signal, 1)
@@ -100,13 +75,11 @@ func run() error {
 		p.Shutdown()
 		stopFunc()
 	}
-
 	return nil
 }
 
 func handleNewTargetLink(handler *Handler, link provider.InterfaceLinkDefinition) error {
 	handler.Logger.Info("Handling new target link", "link", link)
-	handler.Logger.Info("Target Config", "config", link.TargetConfig)
 	handler.linkedFrom[link.SourceID] = link.TargetConfig
 	handler.updateCouchbaseCluster(handler, link.SourceID, link.TargetConfig)
 	return nil
